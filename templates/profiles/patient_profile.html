@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Profile - ICU HIS{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Patient Profile</h4>
+                    <a href="#" class="btn btn-light btn-sm">Edit Profile</a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 text-center mb-4">
+                            {% if patient.photo %}
+                            <img src="{{ url_for('static', filename='uploads/' + patient.photo) }}" alt="Patient Photo" class="img-fluid rounded-circle profile-image">
+                            {% else %}
+                            <img src="{{ url_for('static', filename='images/default_avatar.png') }}" alt="Default Photo" class="img-fluid rounded-circle profile-image">
+                            {% endif %}
+                            <div class="mt-2">
+                                <a href="#" class="btn btn-sm btn-outline-primary">Change Photo</a>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <h2>{{ patient.first_name }} {{ patient.last_name }}</h2>
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <p><strong>Patient ID:</strong> P{{ patient.id }}</p>
+                                    <p><strong>Gender:</strong> {{ patient.gender }}</p>
+                                    <p><strong>Date of Birth:</strong> {{ patient.date_of_birth.strftime('%d-%m-%Y') }}</p>
+                                    <p><strong>Blood Group:</strong> {{ patient.blood_group }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Phone:</strong> {{ patient.phone }}</p>
+                                    <p><strong>Address:</strong> {{ patient.address }}</p>
+                                    <p><strong>Email:</strong> {{ patient.user.email }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Medical History</h5>
+                </div>
+                <div class="card-body">
+                    {% if patient.medical_records %}
+                        <ul class="list-group">
+                            {% for record in patient.medical_records %}
+                                <li class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">{{ record.diagnosis }}</h6>
+                                        <small>{{ record.date.strftime('%d-%m-%Y') }}</small>
+                                    </div>
+                                    <p class="mb-1">{{ record.notes }}</p>
+                                    <small>Dr. {{ record.doctor.first_name }} {{ record.doctor.last_name }}</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No medical records available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">Upcoming Appointments</h5>
+                </div>
+                <div class="card-body">
+                    {% if patient.appointments %}
+                        <ul class="list-group">
+                            {% for appointment in patient.appointments %}
+                                {% if appointment.status == 'scheduled' %}
+                                    <li class="list-group-item">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Dr. {{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</h6>
+                                            <small>{{ appointment.appointment_date.strftime('%d-%m-%Y %H:%M') }}</small>
+                                        </div>
+                                        <p class="mb-1">{{ appointment.purpose }}</p>
+                                        <span class="badge bg-warning">{{ appointment.status }}</span>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No upcoming appointments.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">ICU Admissions</h5>
+                </div>
+                <div class="card-body">
+                    {% if patient.admissions %}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Admission ID</th>
+                                        <th>Room</th>
+                                        <th>Doctor</th>
+                                        <th>Admission Date</th>
+                                        <th>Discharge Date</th>
+                                        <th>Diagnosis</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for admission in patient.admissions %}
+                                        <tr>
+                                            <td>ICU-{{ admission.id }}</td>
+                                            <td>{{ admission.room.room_number }}</td>
+                                            <td>Dr. {{ admission.doctor.first_name }} {{ admission.doctor.last_name }}</td>
+                                            <td>{{ admission.admission_date.strftime('%d-%m-%Y') }}</td>
+                                            <td>{% if admission.discharge_date %}{{ admission.discharge_date.strftime('%d-%m-%Y') }}{% else %}Active{% endif %}</td>
+                                            <td>{{ admission.diagnosis }}</td>
+                                            <td>
+                                                {% if admission.discharge_date %}
+                                                    <span class="badge bg-secondary">Discharged</span>
+                                                {% else %}
+                                                    <span class="badge bg-success">Active</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>No ICU admissions recorded.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

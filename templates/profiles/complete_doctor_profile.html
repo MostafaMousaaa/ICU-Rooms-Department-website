@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Complete Profile - ICU HIS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Complete Your Doctor Profile</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="specialization" class="form-label">Specialization</label>
+                        <select class="form-select" id="specialization" name="specialization" required>
+                            <option value="">Select Specialization</option>
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Neurology">Neurology</option>
+                            <option value="Pulmonology">Pulmonology</option>
+                            <option value="Critical Care">Critical Care</option>
+                            <option value="Anesthesiology">Anesthesiology</option>
+                            <option value="Emergency Medicine">Emergency Medicine</option>
+                            <option value="General Medicine">General Medicine</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="qualification" class="form-label">Qualification</label>
+                        <input type="text" class="form-control" id="qualification" name="qualification" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="experience" class="form-label">Years of Experience</label>
+                        <input type="number" class="form-control" id="experience" name="experience" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="photo" class="form-label">Profile Photo</label>
+                        <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+                        <img id="photo-preview" class="mt-2" style="max-height: 200px; display: none;">
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Complete Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

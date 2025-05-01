@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to ICU Rooms Department</h1>
+    <p class="lead">
+        Our Hospital Information System provides comprehensive management for ICU rooms,
+        patients, and medical staff.
+    </p>
+    <hr class="my-4">
+    <p>
+        This system helps track patient admissions, monitor vital signs, manage appointments,
+        and maintain medical records for improved patient care in the Intensive Care Unit.
+    </p>
+    
+    {% if not session.get('user_id') %}
+        <p class="mt-4">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('register') }}" role="button">Register</a>
+            <a class="btn btn-outline-primary btn-lg ms-2" href="{{ url_for('login') }}" role="button">Login</a>
+        </p>
+    {% endif %}
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">For Patients</h5>
+                <p class="card-text">Access your medical records, view appointments with doctors, and monitor your health progress.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">For Doctors</h5>
+                <p class="card-text">Manage patient records, schedule appointments, and track ICU room availability and patient status.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">For Administrators</h5>
+                <p class="card-text">Oversee the entire ICU department operations, manage users, and view statistical reports.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
