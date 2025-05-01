@@ -1,50 +1,184 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="jumbotron">
-    <h1 class="display-4">Welcome to ICU Rooms Department</h1>
-    <p class="lead">
-        Our Hospital Information System provides comprehensive management for ICU rooms,
-        patients, and medical staff.
-    </p>
-    <hr class="my-4">
-    <p>
-        This system helps track patient admissions, monitor vital signs, manage appointments,
-        and maintain medical records for improved patient care in the Intensive Care Unit.
-    </p>
-    
-    {% if not session.get('user_id') %}
-        <p class="mt-4">
-            <a class="btn btn-primary btn-lg" href="{{ url_for('register') }}" role="button">Register</a>
-            <a class="btn btn-outline-primary btn-lg ms-2" href="{{ url_for('login') }}" role="button">Login</a>
-        </p>
-    {% endif %}
+<div class="hero-section bg-primary text-white rounded-3 p-5 animate__animated animate__fadeIn">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h1 class="display-4 fw-bold">Welcome to ICU Rooms Department</h1>
+            <p class="lead">
+                Our Hospital Information System provides comprehensive management for ICU rooms,
+                patients, and medical staff.
+            </p>
+            <hr class="my-4 border-light">
+            <p>
+                This system helps track patient admissions, monitor vital signs, manage appointments,
+                and maintain medical records for improved patient care in the Intensive Care Unit.
+            </p>
+            
+            {% if not session.get('user_id') %}
+                <div class="mt-4">
+                    <a class="btn btn-light btn-lg px-4" href="{{ url_for('register') }}">
+                        <i class="fas fa-user-plus me-2"></i> Register
+                    </a>
+                    <a class="btn btn-outline-light btn-lg ms-2 px-4" href="{{ url_for('login') }}">
+                        <i class="fas fa-sign-in-alt me-2"></i> Login
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="{{ url_for('static', filename='images/hospital.svg') }}" alt="Hospital Illustration" class="img-fluid" style="max-height: 300px;">
+        </div>
+    </div>
 </div>
 
 <div class="row mt-5">
+    <div class="col-md-12 text-center mb-4">
+        <h2 class="fw-bold text-primary">Our Services</h2>
+        <p class="text-muted">Providing the best care for our patients</p>
+    </div>
+</div>
+
+<div class="row my-4">
     <div class="col-md-4">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">For Patients</h5>
+        <div class="card h-100 service-card border-0 shadow-sm hover-effect">
+            <div class="card-body text-center p-4">
+                <div class="icon-wrapper mb-3">
+                    <i class="fas fa-user-injured fa-3x text-primary"></i>
+                </div>
+                <h3 class="card-title h5 fw-bold">For Patients</h3>
                 <p class="card-text">Access your medical records, view appointments with doctors, and monitor your health progress.</p>
+                <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">For Doctors</h5>
+        <div class="card h-100 service-card border-0 shadow-sm hover-effect">
+            <div class="card-body text-center p-4">
+                <div class="icon-wrapper mb-3">
+                    <i class="fas fa-user-md fa-3x text-primary"></i>
+                </div>
+                <h3 class="card-title h5 fw-bold">For Doctors</h3>
                 <p class="card-text">Manage patient records, schedule appointments, and track ICU room availability and patient status.</p>
+                <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">For Administrators</h5>
+        <div class="card h-100 service-card border-0 shadow-sm hover-effect">
+            <div class="card-body text-center p-4">
+                <div class="icon-wrapper mb-3">
+                    <i class="fas fa-user-shield fa-3x text-primary"></i>
+                </div>
+                <h3 class="card-title h5 fw-bold">For Administrators</h3>
                 <p class="card-text">Oversee the entire ICU department operations, manage users, and view statistical reports.</p>
+                <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
             </div>
         </div>
     </div>
 </div>
+
+<div class="row my-5 pt-3">
+    <div class="col-md-12 text-center mb-4">
+        <h2 class="fw-bold text-primary">Why Choose Us</h2>
+        <p class="text-muted">Excellence in healthcare management</p>
+    </div>
+    <div class="col-md-3">
+        <div class="feature text-center mb-4">
+            <div class="feature-icon mb-3">
+                <span class="icon-circle bg-primary text-white">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+            <h5>Efficient Care</h5>
+            <p class="text-muted">Streamlined processes for better patient care</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="feature text-center mb-4">
+            <div class="feature-icon mb-3">
+                <span class="icon-circle bg-primary text-white">
+                    <i class="fas fa-lock"></i>
+                </span>
+            </div>
+            <h5>Secure Records</h5>
+            <p class="text-muted">Your medical data is protected</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="feature text-center mb-4">
+            <div class="feature-icon mb-3">
+                <span class="icon-circle bg-primary text-white">
+                    <i class="fas fa-chart-line"></i>
+                </span>
+            </div>
+            <h5>Advanced Analytics</h5>
+            <p class="text-muted">Data-driven healthcare decisions</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="feature text-center mb-4">
+            <div class="feature-icon mb-3">
+                <span class="icon-circle bg-primary text-white">
+                    <i class="fas fa-heartbeat"></i>
+                </span>
+            </div>
+            <h5>Patient-Centered</h5>
+            <p class="text-muted">Focus on individual patient needs</p>
+        </div>
+    </div>
+</div>
+
+<div class="stats-section bg-light rounded-3 p-4 mt-5 text-center">
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <h2 class="fw-bold text-primary">Our Impact</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="stat-item">
+                <h2 class="display-4 fw-bold text-primary counter">50+</h2>
+                <p class="text-muted">ICU Rooms</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-item">
+                <h2 class="display-4 fw-bold text-primary counter">200+</h2>
+                <p class="text-muted">Skilled Doctors</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-item">
+                <h2 class="display-4 fw-bold text-primary counter">1000+</h2>
+                <p class="text-muted">Patients Served</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-item">
+                <h2 class="display-4 fw-bold text-primary counter">24/7</h2>
+                <p class="text-muted">Care Available</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Simple animation for counters
+    $(document).ready(function() {
+        $('.counter').each(function () {
+            $(this).prop('Counter', 0).animate({
+                Counter: $(this).text()
+            }, {
+                duration: 2000,
+                easing: 'swing',
+                step: function (now) {
+                    $(this).text(Math.ceil(now));
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
