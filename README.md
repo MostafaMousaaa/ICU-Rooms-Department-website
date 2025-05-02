@@ -728,56 +728,6 @@ graph TD
 
 </div>
 
-## Alternative Visualization
-
-<div align="center">
-
-```mermaid
-flowchart TD
-    %% Define elegant color scheme
-    classDef user fill:#7C3AED,stroke:#6D28D9,color:white,stroke-width:2px
-    classDef patient fill:#059669,stroke:#047857,color:white,stroke-width:2px
-    classDef doctor fill:#2563EB,stroke:#1D4ED8,color:white,stroke-width:2px
-    classDef room fill:#F59E0B,stroke:#D97706,color:white,stroke-width:2px
-    classDef admission fill:#FBBF24,stroke:#D97706,color:white,stroke-width:2px
-    classDef record fill:#EC4899,stroke:#DB2777,color:white,stroke-width:2px
-    classDef vital fill:#F472B6,stroke:#DB2777,color:white,stroke-width:2px
-    classDef appt fill:#06B6D4,stroke:#0891B2,color:white,stroke-width:2px
-    classDef note fill:#34D399,stroke:#059669,color:white,stroke-width:2px
-    
-    %% Entities with icons
-    User("👤 User"):::user
-    Patient("🧑‍⚕️ Patient"):::patient
-    Doctor("👨‍⚕️ Doctor"):::doctor
-    ICURoom("🚪 ICU Room"):::room
-    ICUAdmission("🛏️ ICU Admission"):::admission
-    MedicalRecord("📋 Medical Record"):::record
-    VitalSigns("📊 Vital Signs"):::vital
-    Appointment("📅 Appointment"):::appt
-    PatientNote("📝 Patient Note"):::note
-    
-    %% Relationships with elegant styling
-    User -.->|"1:0-1"| Patient
-    User -.->|"1:0-1"| Doctor
-    User -.->|"1:N"| PatientNote
-    
-    Patient -.->|"1:N"| ICUAdmission
-    Patient -.->|"1:N"| MedicalRecord
-    Patient -.->|"1:N"| Appointment
-    Patient -.->|"1:N"| VitalSigns
-    Patient -.->|"1:N"| PatientNote
-    
-    Doctor -.->|"1:N"| ICUAdmission
-    Doctor -.->|"1:N"| MedicalRecord
-    Doctor -.->|"1:N"| Appointment
-    
-    ICURoom -.->|"1:N"| ICUAdmission
-    ICUAdmission -.->|"1:N"| VitalSigns
-    
-    %% Add box shadows and rounded corners to all nodes
-    linkStyle default stroke:#333,stroke-width:1.5px
-```
-
 </div>
 
 ## Technologies Used
