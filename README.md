@@ -6,135 +6,155 @@ A comprehensive Hospital Information System (HIS) specifically designed for mana
 
 This system helps hospital staff manage intensive care unit operations efficiently. It allows tracking of patient admissions, monitoring vital signs, managing appointments, and maintaining medical records for improved patient care in the ICU.
 
+## Technology Stack
+
+### Backend
+- **Python**: Core programming language
+- **Flask**: Web framework for building the application
+- **SQLAlchemy**: ORM for database interactions
+- **SQLite**: Database for development
+
+### Frontend
+- **HTML5/CSS3**: Structure and styling
+- **JavaScript**: Client-side interactivity
+- **Bootstrap 5**: Responsive UI framework
+- **Font Awesome 6**: Icon library
+- **AOS**: Animate on scroll library
+- **SweetAlert2**: Enhanced user notifications
+- **Animate.css**: CSS animations library
+
+### Features
+- **Responsive Design**: Mobile-friendly interface
+- **Dark Mode**: Support for light/dark theme preferences
+- **Interactive Components**: Enhanced user experience
+- **Modern UI**: Professional healthcare-focused design
+- **Enhanced Security**: Password hashing and authentication
+
 ## Database Schema
+
+### ER Diagram
+<div align="center">
+
+```mermaid
+graph TD
+    %% Define entities in subgraphs
+    subgraph Auth ["Authentication"]
+        User(["👤 User"])
+    end
+    
+    subgraph PatientMgmt ["Patient Management"]
+        Patient(["🧑‍⚕️ Patient"])
+        PatientNote(["📝 PatientNote"])
+    end
+    
+    subgraph StaffMgmt ["Staff Management"]
+        Doctor(["👨‍⚕️ Doctor"])
+    end
+    
+    subgraph ICUMgmt ["ICU Management"]
+        ICURoom(["🚪 ICU Room"])
+        ICUAdmission(["🛏️ ICU Admission"])
+    end
+    
+    subgraph MedRecords ["Medical Records"]
+        MedicalRecord(["📋 Medical Record"])
+        VitalSigns(["📊 Vital Signs"])
+    end
+    
+    subgraph Appts ["Appointments"]
+        Appointment(["📅 Appointment"])
+    end
+    
+    %% Relationships
+    User -->|1:0-1| Patient
+    User -->|1:0-1| Doctor
+    User -->|1:N| PatientNote
+    
+    Patient -->|1:N| ICUAdmission
+    Patient -->|1:N| MedicalRecord
+    Patient -->|1:N| Appointment
+    Patient -->|1:N| VitalSigns
+    Patient -->|1:N| PatientNote
+    
+    Doctor -->|1:N| ICUAdmission
+    Doctor -->|1:N| MedicalRecord
+    Doctor -->|1:N| Appointment
+    
+    ICURoom -->|1:N| ICUAdmission
+    ICUAdmission -->|1:N| VitalSigns
+
+    %% Style entities
+    style User fill:#6366F1,stroke:#4F46E5,color:white,stroke-width:2px
+    style Patient fill:#10B981,stroke:#059669,color:white,stroke-width:2px
+    style PatientNote fill:#34D399,stroke:#059669,color:white,stroke-width:2px
+    style Doctor fill:#3B82F6,stroke:#2563EB,color:white,stroke-width:2px
+    style ICURoom fill:#F59E0B,stroke:#D97706,color:white,stroke-width:2px
+    style ICUAdmission fill:#FBBF24,stroke:#D97706,color:white,stroke-width:2px
+    style MedicalRecord fill:#EC4899,stroke:#DB2777,color:white,stroke-width:2px
+    style VitalSigns fill:#F472B6,stroke:#DB2777,color:white,stroke-width:2px
+    style Appointment fill:#06B6D4,stroke:#0891B2,color:white,stroke-width:2px
+    
+    %% Style subgraphs
+    style Auth fill:#4F46E5,stroke:#4338CA,color:white,opacity:0.1
+    style PatientMgmt fill:#059669,stroke:#047857,color:white,opacity:0.1
+    style StaffMgmt fill:#2563EB,stroke:#1D4ED8,color:white,opacity:0.1 
+    style ICUMgmt fill:#D97706,stroke:#B45309,color:white,opacity:0.1
+    style MedRecords fill:#DB2777,stroke:#BE185D,color:white,opacity:0.1
+    style Appts fill:#0891B2,stroke:#0E7490,color:white,opacity:0.1
+```
+
+</div>
+
+## Alternative Visualization
 
 <div align="center">
 
-### ER Diagram
 ```mermaid
-erDiagram
-    User ||--o| Patient : has
-    User ||--o| Doctor : has
-    Patient ||--o{ ICUAdmission : has
-    Doctor ||--o{ ICUAdmission : manages
-    ICURoom ||--o{ ICUAdmission : houses
-    Patient ||--o{ MedicalRecord : has
-    Doctor ||--o{ MedicalRecord : creates
-    Patient ||--o{ Appointment : schedules
-    Doctor ||--o{ Appointment : conducts
-    Patient ||--o{ PatientNote : has
-    Patient ||--o{ VitalSigns : records
-    ICUAdmission ||--o{ VitalSigns : includes
+flowchart TD
+    %% Define elegant color scheme
+    classDef user fill:#7C3AED,stroke:#6D28D9,color:white,stroke-width:2px
+    classDef patient fill:#059669,stroke:#047857,color:white,stroke-width:2px
+    classDef doctor fill:#2563EB,stroke:#1D4ED8,color:white,stroke-width:2px
+    classDef room fill:#F59E0B,stroke:#D97706,color:white,stroke-width:2px
+    classDef admission fill:#FBBF24,stroke:#D97706,color:white,stroke-width:2px
+    classDef record fill:#EC4899,stroke:#DB2777,color:white,stroke-width:2px
+    classDef vital fill:#F472B6,stroke:#DB2777,color:white,stroke-width:2px
+    classDef appt fill:#06B6D4,stroke:#0891B2,color:white,stroke-width:2px
+    classDef note fill:#34D399,stroke:#059669,color:white,stroke-width:2px
     
-    User {
-        int id PK
-        string username
-        string email
-        string password
-        string user_type
-        datetime created_at
-    }
+    %% Entities with icons
+    User("👤 User"):::user
+    Patient("🧑‍⚕️ Patient"):::patient
+    Doctor("👨‍⚕️ Doctor"):::doctor
+    ICURoom("🚪 ICU Room"):::room
+    ICUAdmission("🛏️ ICU Admission"):::admission
+    MedicalRecord("📋 Medical Record"):::record
+    VitalSigns("📊 Vital Signs"):::vital
+    Appointment("📅 Appointment"):::appt
+    PatientNote("📝 Patient Note"):::note
     
-    Patient {
-        int id PK
-        int user_id FK
-        string patient_id_number
-        string first_name
-        string last_name
-        date date_of_birth
-        string gender
-        string blood_group
-        string referred_by
-        string parent_name
-        string spouse_name
-        string phone
-        string address
-        boolean corporate_patient
-        boolean has_insurance
-        boolean is_smoker
-        string photo
-    }
+    %% Relationships with elegant styling
+    User -.->|"1:0-1"| Patient
+    User -.->|"1:0-1"| Doctor
+    User -.->|"1:N"| PatientNote
     
-    Doctor {
-        int id PK
-        int user_id FK
-        string first_name
-        string last_name
-        string specialization
-        string qualification
-        int experience
-        string phone
-        string address
-        string photo
-    }
+    Patient -.->|"1:N"| ICUAdmission
+    Patient -.->|"1:N"| MedicalRecord
+    Patient -.->|"1:N"| Appointment
+    Patient -.->|"1:N"| VitalSigns
+    Patient -.->|"1:N"| PatientNote
     
-    ICURoom {
-        int id PK
-        string room_number
-        int capacity
-        boolean is_available
-        text equipment
-    }
+    Doctor -.->|"1:N"| ICUAdmission
+    Doctor -.->|"1:N"| MedicalRecord
+    Doctor -.->|"1:N"| Appointment
     
-    ICUAdmission {
-        int id PK
-        int patient_id FK
-        int doctor_id FK
-        int room_id FK
-        datetime admission_date
-        datetime discharge_date
-        text diagnosis
-        text treatment_plan
-        text notes
-    }
+    ICURoom -.->|"1:N"| ICUAdmission
+    ICUAdmission -.->|"1:N"| VitalSigns
     
-    MedicalRecord {
-        int id PK
-        int patient_id FK
-        int doctor_id FK
-        datetime date
-        text symptoms
-        text diagnosis
-        text treatment
-        text medications
-        text notes
-        text allergies
-        boolean dental_treatment
-        boolean low_blood_pressure
-    }
-    
-    Appointment {
-        int id PK
-        int patient_id FK
-        int doctor_id FK
-        datetime appointment_date
-        string purpose
-        string status
-        text notes
-    }
-    
-    PatientNote {
-        int id PK
-        int patient_id FK
-        int created_by FK
-        text note_text
-        datetime created_at
-    }
-    
-    VitalSigns {
-        int id PK
-        int patient_id FK
-        int admission_id FK
-        int recorded_by FK
-        datetime timestamp
-        float temperature
-        string blood_pressure
-        int heart_rate
-        int respiratory_rate
-        float oxygen_saturation
-        text notes
-    }
+    %% Add box shadows and rounded corners to all nodes
+    linkStyle default stroke:#333,stroke-width:1.5px
 ```
+
 </div>
 
 ## Detailed Database Schema
@@ -654,89 +674,82 @@ erDiagram
   </tr>
 </table>
 
-## Entity Relationships
+## UI Features
 
-<div align="center">
+### Home Page
+- **Hero Section**: Modern gradient background with SVG illustrations
+- **Feature Cards**: Animated interactive cards showcasing system capabilities 
+- **Statistics**: Animated counters showing key metrics
+- **Testimonials**: Professional feedback section from healthcare workers
+- **Latest Updates**: News/blog section with icon-based cards
+- **Call-to-Action**: Engaging section to drive user registration
 
-```mermaid
-graph TD
-    %% Define entities in subgraphs
-    subgraph Auth ["Authentication"]
-        User(["👤 User"])
-    end
-    
-    subgraph PatientMgmt ["Patient Management"]
-        Patient(["🧑‍⚕️ Patient"])
-        PatientNote(["📝 PatientNote"])
-    end
-    
-    subgraph StaffMgmt ["Staff Management"]
-        Doctor(["👨‍⚕️ Doctor"])
-    end
-    
-    subgraph ICUMgmt ["ICU Management"]
-        ICURoom(["🚪 ICU Room"])
-        ICUAdmission(["🛏️ ICU Admission"])
-    end
-    
-    subgraph MedRecords ["Medical Records"]
-        MedicalRecord(["📋 Medical Record"])
-        VitalSigns(["📊 Vital Signs"])
-    end
-    
-    subgraph Appts ["Appointments"]
-        Appointment(["📅 Appointment"])
-    end
-    
-    %% Relationships
-    User -->|1:0-1| Patient
-    User -->|1:0-1| Doctor
-    User -->|1:N| PatientNote
-    
-    Patient -->|1:N| ICUAdmission
-    Patient -->|1:N| MedicalRecord
-    Patient -->|1:N| Appointment
-    Patient -->|1:N| VitalSigns
-    Patient -->|1:N| PatientNote
-    
-    Doctor -->|1:N| ICUAdmission
-    Doctor -->|1:N| MedicalRecord
-    Doctor -->|1:N| Appointment
-    
-    ICURoom -->|1:N| ICUAdmission
-    ICUAdmission -->|1:N| VitalSigns
+### Patient/Doctor Profiles
+- **Responsive Design**: Mobile-friendly layouts for all profile pages
+- **Photo Management**: Upload and change profile photos
+- **Interactive Editing**: In-place editing of profile information
+- **Medical History**: Visual presentation of patient records and history
+- **Quick Actions**: Contextual action menus for common operations
 
-    %% Style entities
-    style User fill:#6366F1,stroke:#4F46E5,color:white,stroke-width:2px
-    style Patient fill:#10B981,stroke:#059669,color:white,stroke-width:2px
-    style PatientNote fill:#34D399,stroke:#059669,color:white,stroke-width:2px
-    style Doctor fill:#3B82F6,stroke:#2563EB,color:white,stroke-width:2px
-    style ICURoom fill:#F59E0B,stroke:#D97706,color:white,stroke-width:2px
-    style ICUAdmission fill:#FBBF24,stroke:#D97706,color:white,stroke-width:2px
-    style MedicalRecord fill:#EC4899,stroke:#DB2777,color:white,stroke-width:2px
-    style VitalSigns fill:#F472B6,stroke:#DB2777,color:white,stroke-width:2px
-    style Appointment fill:#06B6D4,stroke:#0891B2,color:white,stroke-width:2px
-    
-    %% Style subgraphs
-    style Auth fill:#4F46E5,stroke:#4338CA,color:white,opacity:0.1
-    style PatientMgmt fill:#059669,stroke:#047857,color:white,opacity:0.1
-    style StaffMgmt fill:#2563EB,stroke:#1D4ED8,color:white,opacity:0.1 
-    style ICUMgmt fill:#D97706,stroke:#B45309,color:white,opacity:0.1
-    style MedRecords fill:#DB2777,stroke:#BE185D,color:white,opacity:0.1
-    style Appts fill:#0891B2,stroke:#0E7490,color:white,opacity:0.1
+### Forms & Validation
+- **Enhanced Validation**: Real-time form validation with visual feedback
+- **SweetAlert2 Integration**: Modern notifications for form actions
+- **Accessibility**: Improved form labeling and error messaging
+
+### Dark Mode
+- **Theme Support**: System-wide light/dark theme with persistent preference
+- **Automatic Detection**: Support for system preference detection
+- **Optimized Contrast**: Careful color selection for readability in both modes
+
+## Installation and Setup
+
+### Prerequisites
+- Python 3.8+
+- pip (Python package installer)
+- Git (optional, for cloning the repository)
+
+### Setup Instructions
+
+1. Clone the repository or download the source code:
+```bash
+git clone https://github.com/yourusername/icu-his.git
+cd icu-his
 ```
 
-</div>
+2. Create and activate a virtual environment (optional but recommended):
+```bash
+python -m venv venv
+# On Windows
+venv\Scripts\activate
+# On macOS/Linux
+source venv/bin/activate
+```
 
-</div>
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-## Technologies Used
+4. Run the database schema update script:
+```bash
+python update_schema.py
+```
 
-- **Frontend**: HTML, CSS, JavaScript, Bootstrap 5
-- **Backend**: Python, Flask
-- **Database**: SQLite (SQLAlchemy ORM)
+5. Start the application:
+```bash
+python run.py
+```
 
-## Setup Instructions
+6. Access the application at http://127.0.0.1:5000
 
-1. Clone the repository
-2. Install dependencies:
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Copyright
+
+Reserved to SMBE27 2025

@@ -497,3 +497,90 @@ input[type="radio"]:checked + .user-type-label .user-type-icon {
     border-radius: 0.5rem;
     border: none;
 }
+
+/* Hospital illustration fallback styles */
+.illustration-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+}
+
+.illustration-container .fallback-icon {
+    font-size: 150px;
+    color: var(--primary-color);
+    opacity: 0.8;
+}
+
+.hospital-illustration {
+    max-height: 300px;
+    transition: var(--transition);
+}
+
+.hospital-illustration:hover {
+    transform: translateY(-5px);
+}
+
+/* News card date styling fix */
+.news-date {
+    background-color: #0d6efd;
+    color: white;
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    z-index: 10;
+}
+
+.news-date span {
+    font-size: 1.25rem;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.news-date small {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.news-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Updated News Card Styles */
+.news-card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.date-badge {
+    min-width: 45px;
+    border-radius: 6px;
+}
+
+.icon-bg {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.news-card:hover .icon-bg {
+    transform: scale(1.1);
+}

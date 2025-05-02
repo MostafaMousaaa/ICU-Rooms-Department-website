@@ -1,163 +1,478 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+        position: relative;
+        overflow: hidden;
+        border-radius: 0;
+    }
+    
+    .hero-pattern {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 50%;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.5;
+        z-index: 0;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .stat-card {
+        border: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 10px;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .testimonial-card {
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .testimonial-card .quote {
+        font-size: 4rem;
+        position: absolute;
+        opacity: 0.1;
+        top: 10px;
+        right: 20px;
+    }
+    
+    .feature-card {
+        height: 100%;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    
+    .feature-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        background-color: rgba(13, 110, 253, 0.1);
+        color: #0d6efd;
+        font-size: 1.75rem;
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover .feature-icon {
+        background-color: #0d6efd;
+        color: white;
+        transform: scale(1.1);
+    }
+    
+    .section-header {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 2rem;
+    }
+    
+    .section-header:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        height: 4px;
+        width: 60px;
+        background-color: #0d6efd;
+    }
+    
+    .call-to-action {
+        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+        border-radius: 10px;
+    }
+    
+    .news-card {
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .news-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .news-date {
+        background-color: #0d6efd;
+        color: white;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        border-radius: 5px;
+    }
+    
+    .pulse-animation {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="hero-section bg-primary text-white rounded-3 p-5 animate__animated animate__fadeIn">
-    <div class="row align-items-center">
-        <div class="col-md-6">
-            <h1 class="display-4 fw-bold">Welcome to ICU Rooms Department</h1>
-            <p class="lead">
-                Our Hospital Information System provides comprehensive management for ICU rooms,
-                patients, and medical staff.
-            </p>
-            <hr class="my-4 border-light">
-            <p>
-                This system helps track patient admissions, monitor vital signs, manage appointments,
-                and maintain medical records for improved patient care in the Intensive Care Unit.
-            </p>
+<!-- Hero Section -->
+<div class="hero-section py-5 mb-5">
+    <div class="hero-pattern"></div>
+    <div class="container hero-content">
+        <div class="row align-items-center py-5">
+            <div class="col-lg-6 text-white mb-5 mb-lg-0">
+                <span class="badge bg-light text-primary mb-3">ICU Department</span>
+                <h1 class="display-4 fw-bold mb-3">Advanced ICU Management System</h1>
+                <p class="lead mb-4">Streamlining critical care delivery with our comprehensive, intelligent hospital information system designed specifically for intensive care units.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    {% if not session.get('user_id') %}
+                        <a href="{{ url_for('register') }}" class="btn btn-light btn-lg px-4 me-md-2 fw-bold">
+                            <i class="fas fa-user-plus me-2"></i> Register Now
+                        </a>
+                        <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fas fa-sign-in-alt me-2"></i> Login
+                        </a>
+                    {% else %}
+                        <a href="#" class="btn btn-light btn-lg px-4 me-md-2 fw-bold">
+                            <i class="fas fa-chart-line me-2"></i> Dashboard
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fas fa-user-md me-2"></i> My Profile
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="{{ url_for('static', filename='images/undraw_hospital.svg') }}" alt="ICU Management System" class="img-fluid" style="max-height: 400px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="container mb-6 py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center mb-5">
+            <h2 class="section-header fw-bold">Making a Difference in Critical Care</h2>
+            <p class="lead text-muted">Our system has been instrumental in improving ICU outcomes across healthcare facilities.</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="stat-card card text-center p-4 bg-light h-100">
+                <div class="card-body">
+                    <div class="display-4 fw-bold text-primary mb-2 counter">500+</div>
+                    <p class="text-muted mb-0">ICU Beds Managed</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="stat-card card text-center p-4 bg-light h-100">
+                <div class="card-body">
+                    <div class="display-4 fw-bold text-primary mb-2 counter">98%</div>
+                    <p class="text-muted mb-0">Staff Satisfaction</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="stat-card card text-center p-4 bg-light h-100">
+                <div class="card-body">
+                    <div class="display-4 fw-bold text-primary mb-2 counter">45%</div>
+                    <p class="text-muted mb-0">Reduced Paperwork</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="stat-card card text-center p-4 bg-light h-100">
+                <div class="card-body">
+                    <div class="display-4 fw-bold text-primary mb-2 counter">24/7</div>
+                    <p class="text-muted mb-0">Technical Support</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container py-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center mb-5">
+            <h2 class="section-header fw-bold">Advanced ICU Management Features</h2>
+            <p class="lead text-muted">Our comprehensive suite of tools helps medical professionals provide exceptional care</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="feature-card card h-100">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3 class="h4 mb-3">Patient Management</h3>
+                    <p class="text-muted">Comprehensive patient profiles with medical history, ICU admissions tracking, and real-time status monitoring.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card card h-100">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3 class="h4 mb-3">Vital Signs Monitoring</h3>
+                    <p class="text-muted">Real-time vital signs tracking with automated alerts and historical data visualization for trend analysis.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card card h-100">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-procedures"></i>
+                    </div>
+                    <h3 class="h4 mb-3">ICU Bed Management</h3>
+                    <p class="text-muted">Efficient ICU bed allocation, occupancy tracking, and resource optimization for maximum operational efficiency.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card card h-100">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-medical-alt"></i>
+                    </div>
+                    <h3 class="h4 mb-3">Medical Records</h3>
+                    <p class="text-muted">Secure, comprehensive electronic medical records with quick access to patient history and treatment plans.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card card h-100">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="h4 mb-3">Appointment Scheduling</h3>
+                    <p class="text-muted">Streamlined appointment management for doctors, patients, and staff with automated reminders.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card card h-100">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="h4 mb-3">Analytics & Reports</h3>
+                    <p class="text-muted">Powerful analytics dashboard with customizable reports for data-driven healthcare decisions.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="bg-light py-5 mb-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center mb-5">
+                <h2 class="section-header fw-bold">Trusted by Healthcare Professionals</h2>
+                <p class="lead text-muted">See what medical experts say about our ICU management system</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card card h-100 bg-white">
+                    <div class="card-body p-4 position-relative">
+                        <div class="quote"><i class="fas fa-quote-right"></i></div>
+                        <p class="mb-4">"This system has revolutionized our ICU operations. Patient monitoring and care coordination have never been more efficient."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle overflow-hidden me-3" style="width: 50px; height: 50px;">
+                                <i class="fas fa-user-md fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0 h6">Dr. Sarah Johnson</h5>
+                                <p class="text-muted small mb-0">Chief of ICU, General Hospital</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
-            {% if not session.get('user_id') %}
-                <div class="mt-4">
-                    <a class="btn btn-light btn-lg px-4" href="{{ url_for('register') }}">
-                        <i class="fas fa-user-plus me-2"></i> Register
-                    </a>
-                    <a class="btn btn-outline-light btn-lg ms-2 px-4" href="{{ url_for('login') }}">
-                        <i class="fas fa-sign-in-alt me-2"></i> Login
-                    </a>
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card card h-100 bg-white">
+                    <div class="card-body p-4 position-relative">
+                        <div class="quote"><i class="fas fa-quote-right"></i></div>
+                        <p class="mb-4">"The real-time monitoring capabilities have helped us respond faster to critical changes in patient condition, potentially saving lives."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle overflow-hidden me-3" style="width: 50px; height: 50px;">
+                                <i class="fas fa-user-nurse fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0 h6">Nurse Michael Chen</h5>
+                                <p class="text-muted small mb-0">ICU Nurse Manager, Metro Medical</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            {% endif %}
-        </div>
-        <div class="col-md-6 text-center">
-            <img src="{{ url_for('static', filename='images/hospital.svg') }}" alt="Hospital Illustration" class="img-fluid" style="max-height: 300px;">
-        </div>
-    </div>
-</div>
-
-<div class="row mt-5">
-    <div class="col-md-12 text-center mb-4">
-        <h2 class="fw-bold text-primary">Our Services</h2>
-        <p class="text-muted">Providing the best care for our patients</p>
-    </div>
-</div>
-
-<div class="row my-4">
-    <div class="col-md-4">
-        <div class="card h-100 service-card border-0 shadow-sm hover-effect">
-            <div class="card-body text-center p-4">
-                <div class="icon-wrapper mb-3">
-                    <i class="fas fa-user-injured fa-3x text-primary"></i>
-                </div>
-                <h3 class="card-title h5 fw-bold">For Patients</h3>
-                <p class="card-text">Access your medical records, view appointments with doctors, and monitor your health progress.</p>
-                <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
             </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card h-100 service-card border-0 shadow-sm hover-effect">
-            <div class="card-body text-center p-4">
-                <div class="icon-wrapper mb-3">
-                    <i class="fas fa-user-md fa-3x text-primary"></i>
+            
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card card h-100 bg-white">
+                    <div class="card-body p-4 position-relative">
+                        <div class="quote"><i class="fas fa-quote-right"></i></div>
+                        <p class="mb-4">"As a hospital administrator, I've seen a significant improvement in resource utilization and staff satisfaction since implementing this system."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle overflow-hidden me-3" style="width: 50px; height: 50px;">
+                                <i class="fas fa-user-tie fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0 h6">Dr. Amanda Rodriguez</h5>
+                                <p class="text-muted small mb-0">Hospital Director, City Healthcare</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="card-title h5 fw-bold">For Doctors</h3>
-                <p class="card-text">Manage patient records, schedule appointments, and track ICU room availability and patient status.</p>
-                <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card h-100 service-card border-0 shadow-sm hover-effect">
-            <div class="card-body text-center p-4">
-                <div class="icon-wrapper mb-3">
-                    <i class="fas fa-user-shield fa-3x text-primary"></i>
-                </div>
-                <h3 class="card-title h5 fw-bold">For Administrators</h3>
-                <p class="card-text">Oversee the entire ICU department operations, manage users, and view statistical reports.</p>
-                <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row my-5 pt-3">
-    <div class="col-md-12 text-center mb-4">
-        <h2 class="fw-bold text-primary">Why Choose Us</h2>
-        <p class="text-muted">Excellence in healthcare management</p>
-    </div>
-    <div class="col-md-3">
-        <div class="feature text-center mb-4">
-            <div class="feature-icon mb-3">
-                <span class="icon-circle bg-primary text-white">
-                    <i class="fas fa-check"></i>
-                </span>
+<!-- Call to Action -->
+<div class="container mb-5">
+    <div class="call-to-action text-white p-5">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <h2 class="fw-bold mb-3">Ready to transform your ICU management?</h2>
+                <p class="lead mb-0">Join hundreds of healthcare facilities already benefiting from our advanced system.</p>
             </div>
-            <h5>Efficient Care</h5>
-            <p class="text-muted">Streamlined processes for better patient care</p>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="feature text-center mb-4">
-            <div class="feature-icon mb-3">
-                <span class="icon-circle bg-primary text-white">
-                    <i class="fas fa-lock"></i>
-                </span>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('register') }}" class="btn btn-light btn-lg px-4 fw-bold pulse-animation">
+                    Get Started Today
+                </a>
             </div>
-            <h5>Secure Records</h5>
-            <p class="text-muted">Your medical data is protected</p>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="feature text-center mb-4">
-            <div class="feature-icon mb-3">
-                <span class="icon-circle bg-primary text-white">
-                    <i class="fas fa-chart-line"></i>
-                </span>
-            </div>
-            <h5>Advanced Analytics</h5>
-            <p class="text-muted">Data-driven healthcare decisions</p>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="feature text-center mb-4">
-            <div class="feature-icon mb-3">
-                <span class="icon-circle bg-primary text-white">
-                    <i class="fas fa-heartbeat"></i>
-                </span>
-            </div>
-            <h5>Patient-Centered</h5>
-            <p class="text-muted">Focus on individual patient needs</p>
         </div>
     </div>
 </div>
 
-<div class="stats-section bg-light rounded-3 p-4 mt-5 text-center">
+<!-- Latest Updates Section -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center mb-5">
+            <h2 class="section-header fw-bold">Latest Updates</h2>
+            <p class="lead text-muted">Stay informed about our system improvements and healthcare innovations</p>
+        </div>
+    </div>
+    
     <div class="row">
-        <div class="col-md-12 mb-4">
-            <h2 class="fw-bold text-primary">Our Impact</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="stat-item">
-                <h2 class="display-4 fw-bold text-primary counter">50+</h2>
-                <p class="text-muted">ICU Rooms</p>
+        <div class="col-md-4 mb-4">
+            <div class="news-card card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-bg bg-primary text-white rounded-circle p-3 me-3">
+                                <i class="fas fa-chart-line fa-2x"></i>
+                            </div>
+                            <h4 class="h5 mb-0">New Features</h4>
+                        </div>
+                        <div class="date-badge bg-primary text-white text-center rounded py-1 px-2">
+                            <div class="fw-bold">12</div>
+                            <small>MAY</small>
+                        </div>
+                    </div>
+                    <h4 class="h5 mb-3">Patient Monitoring Features Released</h4>
+                    <p class="text-muted mb-3">We've added advanced vital sign analytics and predictive alerts to our monitoring module.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+                </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="stat-item">
-                <h2 class="display-4 fw-bold text-primary counter">200+</h2>
-                <p class="text-muted">Skilled Doctors</p>
+        
+        <div class="col-md-4 mb-4">
+            <div class="news-card card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-bg bg-success text-white rounded-circle p-3 me-3">
+                                <i class="fas fa-file-medical-alt fa-2x"></i>
+                            </div>
+                            <h4 class="h5 mb-0">Case Study</h4>
+                        </div>
+                        <div class="date-badge bg-primary text-white text-center rounded py-1 px-2">
+                            <div class="fw-bold">03</div>
+                            <small>MAY</small>
+                        </div>
+                    </div>
+                    <h4 class="h5 mb-3">Study: Improved Patient Outcomes</h4>
+                    <p class="text-muted mb-3">Read how General Hospital reduced critical events by 32% using our ICU management system.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Read More</a>
+                </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="stat-item">
-                <h2 class="display-4 fw-bold text-primary counter">1000+</h2>
-                <p class="text-muted">Patients Served</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="stat-item">
-                <h2 class="display-4 fw-bold text-primary counter">24/7</h2>
-                <p class="text-muted">Care Available</p>
+        
+        <div class="col-md-4 mb-4">
+            <div class="news-card card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-bg bg-info text-white rounded-circle p-3 me-3">
+                                <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                            </div>
+                            <h4 class="h5 mb-0">Webinar</h4>
+                        </div>
+                        <div class="date-badge bg-primary text-white text-center rounded py-1 px-2">
+                            <div class="fw-bold">25</div>
+                            <small>APR</small>
+                        </div>
+                    </div>
+                    <h4 class="h5 mb-3">Upcoming Webinar: Advanced System Features</h4>
+                    <p class="text-muted mb-3">Join our expert panel for a deep dive into maximizing ICU management efficiency.</p>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Register Now</a>
+                </div>
             </div>
         </div>
     </div>
@@ -166,19 +481,63 @@
 
 {% block extra_js %}
 <script>
-    // Simple animation for counters
-    $(document).ready(function() {
-        $('.counter').each(function () {
-            $(this).prop('Counter', 0).animate({
-                Counter: $(this).text()
-            }, {
-                duration: 2000,
-                easing: 'swing',
-                step: function (now) {
-                    $(this).text(Math.ceil(now));
+    // Animated counter implementation
+    const counters = document.querySelectorAll('.counter');
+    
+    function animateCounters() {
+        counters.forEach(counter => {
+            const target = counter.innerText;
+            let count = 0;
+            let step;
+            
+            if (target.includes('%')) {
+                step = 1;
+                target = parseInt(target);
+            } else if (target.includes('/')) {
+                step = 0;
+                return; // Skip for text like "24/7"
+            } else if (target.includes('+')) {
+                step = 5;
+                target = parseInt(target);
+            } else {
+                step = parseInt(target) / 100;
+            }
+            
+            if (isNaN(step) || step <= 0) {
+                return; // Skip if not a valid number
+            }
+            
+            const updateCount = () => {
+                if (count < target) {
+                    count += step;
+                    counter.innerText = Math.round(count) + (target.toString().includes('+') ? '+' : target.toString().includes('%') ? '%' : '');
+                    setTimeout(updateCount, 20);
+                } else {
+                    counter.innerText = target.toString();
                 }
-            });
+            };
+            
+            updateCount();
         });
-    });
+    }
+    
+    // Intersection Observer for counters
+    const observerOptions = {
+        root: null,
+        threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    if (counters.length > 0) {
+        observer.observe(document.querySelector('.stat-card'));
+    }
 </script>
 {% endblock %}
