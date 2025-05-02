@@ -36,71 +36,108 @@ This system helps hospital staff manage intensive care unit operations efficient
 <div align="center">
 
 ```mermaid
-graph TD
-    %% Define entities in subgraphs
-    subgraph Auth ["Authentication"]
-        User(["👤 User"])
-    end
+erDiagram
+    User ||--o{ Patient : "has profile"
+    User ||--o{ Doctor : "has profile"
+    User ||--o{ PatientNote : "creates"
     
-    subgraph PatientMgmt ["Patient Management"]
-        Patient(["🧑‍⚕️ Patient"])
-        PatientNote(["📝 PatientNote"])
-    end
+    Patient ||--o{ ICUAdmission : "has"
+    Patient ||--o{ MedicalRecord : "has"
+    Patient ||--o{ Appointment : "schedules"
+    Patient ||--o{ VitalSigns : "records"
+    Patient ||--o{ PatientNote : "has"
     
-    subgraph StaffMgmt ["Staff Management"]
-        Doctor(["👨‍⚕️ Doctor"])
-    end
+    Doctor ||--o{ ICUAdmission : "manages"
+    Doctor ||--o{ MedicalRecord : "creates"
+    Doctor ||--o{ Appointment : "conducts"
     
-    subgraph ICUMgmt ["ICU Management"]
-        ICURoom(["🚪 ICU Room"])
-        ICUAdmission(["🛏️ ICU Admission"])
-    end
+    ICURoom ||--o{ ICUAdmission : "assigned to"
+    ICUAdmission ||--o{ VitalSigns : "includes"
     
-    subgraph MedRecords ["Medical Records"]
-        MedicalRecord(["📋 Medical Record"])
-        VitalSigns(["📊 Vital Signs"])
-    end
+    User {
+        int id PK
+        string username
+        string email
+        string password
+        string user_type
+        datetime created_at
+    }
     
-    subgraph Appts ["Appointments"]
-        Appointment(["📅 Appointment"])
-    end
+    Patient {
+        int id PK
+        int user_id FK
+        string patient_id_number
+        string first_name
+        string last_name
+        date date_of_birth
+        string gender
+        string blood_group
+        string phone
+        string address
+    }
     
-    %% Relationships
-    User -->|1:0-1| Patient
-    User -->|1:0-1| Doctor
-    User -->|1:N| PatientNote
+    Doctor {
+        int id PK
+        int user_id FK
+        string first_name
+        string last_name
+        string specialization
+        string qualification
+        int experience
+        string phone
+        string address
+    }
     
-    Patient -->|1:N| ICUAdmission
-    Patient -->|1:N| MedicalRecord
-    Patient -->|1:N| Appointment
-    Patient -->|1:N| VitalSigns
-    Patient -->|1:N| PatientNote
+    ICURoom {
+        int id PK
+        string room_number
+        int capacity
+        boolean is_available
+    }
     
-    Doctor -->|1:N| ICUAdmission
-    Doctor -->|1:N| MedicalRecord
-    Doctor -->|1:N| Appointment
+    ICUAdmission {
+        int id PK
+        int patient_id FK
+        int doctor_id FK
+        int room_id FK
+        datetime admission_date
+        datetime discharge_date
+    }
     
-    ICURoom -->|1:N| ICUAdmission
-    ICUAdmission -->|1:N| VitalSigns
-
-    %% Style entities
-    style User fill:#6366F1,stroke:#4F46E5,color:white,stroke-width:2px
-    style Patient fill:#10B981,stroke:#059669,color:white,stroke-width:2px
-    style PatientNote fill:#34D399,stroke:#059669,color:white,stroke-width:2px
-    style Doctor fill:#3B82F6,stroke:#2563EB,color:white,stroke-width:2px
-    style ICURoom fill:#F59E0B,stroke:#D97706,color:white,stroke-width:2px
-    style ICUAdmission fill:#FBBF24,stroke:#D97706,color:white,stroke-width:2px
-    style MedicalRecord fill:#EC4899,stroke:#DB2777,color:white,stroke-width:2px
-    style VitalSigns fill:#F472B6,stroke:#DB2777,color:white,stroke-width:2px
-    style Appointment fill:#06B6D4,stroke:#0891B2,color:white,stroke-width:2px
+    MedicalRecord {
+        int id PK
+        int patient_id FK
+        int doctor_id FK
+        datetime date
+        text diagnosis
+        text treatment
+    }
     
-    %% Style subgraphs
-    style Auth fill:#4F46E5,stroke:#4338CA,color:white,opacity:0.1
-    style PatientMgmt fill:#059669,stroke:#047857,color:white,opacity:0.1
-    style StaffMgmt fill:#2563EB,stroke:#1D4ED8,color:white,opacity:0.1 
-    style ICUMgmt fill:#D97706,stroke:#B45309,color:white,opacity:0.1
-    style MedRecords fill:#DB2777,stroke:#BE185D,color:white,opacity:0.1
-    style Appts fill:#0891B2,stroke:#0E7490,color:white,opacity:0.1
+    VitalSigns {
+        int id PK
+        int patient_id FK
+        int admission_id FK
+        datetime timestamp
+        float temperature
+        string blood_pressure
+        int heart_rate
+    }
+    
+    Appointment {
+        int id PK
+        int patient_id FK
+        int doctor_id FK
+        datetime appointment_date
+        string status
+    }
+    
+    PatientNote {
+        int id PK
+        int patient_id FK
+        int created_by FK
+        text note_text
+        datetime created_at
+    }
 ```
 
 </div>
