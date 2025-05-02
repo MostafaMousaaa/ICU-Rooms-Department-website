@@ -11,20 +11,101 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 
-    // Add smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            if (this.getAttribute('href') !== "#") {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                document.querySelector(targetId).scrollIntoView({
-                    behavior: 'smooth'
+    // Enhanced form validation with visual feedback
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+        const inputs = form.querySelectorAll('input, select, textarea');
+        
+        inputs.forEach(input => {
+            // Real-time validation feedback
+            input.addEventListener('input', function() {
+                if (this.checkValidity()) {
+                    this.classList.add('is-valid');
+                    this.classList.remove('is-invalid');
+                } else {
+                    this.classList.add('is-invalid');
+                    this.classList.remove('is-valid');
+                }
+            });
+        });
+        
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                // Use SweetAlert2 for better error feedback
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'Please check the form for errors.',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
                 });
             }
+            
+            form.classList.add('was-validated');
+        }, false);
+    });
+
+    // Enhanced confirmation dialogs
+    document.querySelectorAll('[data-confirm]').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const message = this.getAttribute('data-confirm') || 'Are you sure you want to perform this action?';
+            const href = this.getAttribute('href');
+            
+            Swal.fire({
+                title: 'Confirmation',
+                text: message,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#0d6efd',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, proceed',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            });
         });
     });
 
-    // Add animation class to elements when they come into view
+    // Enhanced notifications
+    window.showNotification = function(message, type = 'info', icon = null) {
+        const icons = {
+            'success': 'fas fa-check-circle',
+            'error': 'fas fa-times-circle',
+            'warning': 'fas fa-exclamation-triangle',
+            'info': 'fas fa-info-circle'
+        };
+        
+        const iconHtml = icon || `<i class="${icons[type] || icons.info}"></i>`;
+        
+        Swal.fire({
+            html: `<div>${iconHtml} ${message}</div>`,
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            customClass: {
+                popup: `swal2-${type}`
+            },
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutRight'
+            }
+        });
+    };
+
+    // Add animation to elements when they come into view
     const animateElements = document.querySelectorAll('.animate-on-scroll');
     
     if (animateElements.length > 0) {
@@ -66,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Profile image preview
+    // Profile image preview with enhanced feedback
     const photoInput = document.getElementById('photo');
     const photoPreview = document.getElementById('photo-preview');
     
@@ -74,13 +155,60 @@ document.addEventListener('DOMContentLoaded', function() {
         photoInput.addEventListener('change', function() {
             const file = this.files[0];
             if (file) {
+                // Check file size
+                if (file.size > 2 * 1024 * 1024) { // 2MB
+                    showNotification('File size should be less than 2MB', 'error');
+                    this.value = '';
+                    return;
+                }
+                
+                // Check file type
+                if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
+                    showNotification('Only JPG, PNG and GIF files are allowed', 'error');
+                    this.value = '';
+                    return;
+                }
+                
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     photoPreview.src = e.target.result;
                     photoPreview.style.display = 'block';
+                    photoPreview.classList.add('animate__animated', 'animate__fadeIn');
                 };
                 reader.readAsDataURL(file);
             }
+        });
+    }
+
+    // Counter animation
+    const counters = document.querySelectorAll('.counter');
+    if (counters.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.innerText);
+                    let count = 0;
+                    const increment = target / 50; // Adjust speed here
+                    
+                    const updateCount = () => {
+                        if(count < target) {
+                            count += increment;
+                            counter.innerText = Math.ceil(count);
+                            setTimeout(updateCount, 20);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+                    
+                    updateCount();
+                    observer.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        counters.forEach(counter => {
+            observer.observe(counter);
         });
     }
 
