@@ -660,42 +660,35 @@ erDiagram
 
 ```mermaid
 graph TD
-    subgraph Authentication
+    %% Define entities in subgraphs
+    subgraph Auth ["Authentication"]
         User(["👤 User"])
-        style User fill:#6366F1,stroke:#4F46E5,color:white
     end
     
-    subgraph "Patient Management"
+    subgraph PatientMgmt ["Patient Management"]
         Patient(["🧑‍⚕️ Patient"])
         PatientNote(["📝 PatientNote"])
-        style Patient fill:#10B981,stroke:#059669,color:white
-        style PatientNote fill:#34D399,stroke:#059669,color:white
     end
     
-    subgraph "Staff Management"
+    subgraph StaffMgmt ["Staff Management"]
         Doctor(["👨‍⚕️ Doctor"])
-        style Doctor fill:#3B82F6,stroke:#2563EB,color:white
     end
     
-    subgraph "ICU Management"
+    subgraph ICUMgmt ["ICU Management"]
         ICURoom(["🚪 ICU Room"])
         ICUAdmission(["🛏️ ICU Admission"])
-        style ICURoom fill:#F59E0B,stroke:#D97706,color:white
-        style ICUAdmission fill:#FBBF24,stroke:#D97706,color:white
     end
     
-    subgraph "Medical Records"
+    subgraph MedRecords ["Medical Records"]
         MedicalRecord(["📋 Medical Record"])
         VitalSigns(["📊 Vital Signs"])
-        style MedicalRecord fill:#EC4899,stroke:#DB2777,color:white
-        style VitalSigns fill:#F472B6,stroke:#DB2777,color:white
     end
     
-    subgraph "Appointments"
+    subgraph Appts ["Appointments"]
         Appointment(["📅 Appointment"])
-        style Appointment fill:#06B6D4,stroke:#0891B2,color:white
     end
     
+    %% Relationships
     User -->|1:0-1| Patient
     User -->|1:0-1| Doctor
     User -->|1:N| PatientNote
@@ -713,21 +706,24 @@ graph TD
     ICURoom -->|1:N| ICUAdmission
     ICUAdmission -->|1:N| VitalSigns
 
-    %% Set colors for subgraphs
-    classDef authBG fill:#4F46E5,stroke:#4338CA,color:white
-    classDef patientBG fill:#059669,stroke:#047857,color:white
-    classDef staffBG fill:#2563EB,stroke:#1D4ED8,color:white
-    classDef icuBG fill:#D97706,stroke:#B45309,color:white
-    classDef recordsBG fill:#DB2777,stroke:#BE185D,color:white
-    classDef apptBG fill:#0891B2,stroke:#0E7490,color:white
-
-    %% Apply colors to subgraphs
-    class Authentication authBG
-    class "Patient Management" patientBG
-    class "Staff Management" staffBG
-    class "ICU Management" icuBG
-    class "Medical Records" recordsBG
-    class "Appointments" apptBG
+    %% Style entities
+    style User fill:#6366F1,stroke:#4F46E5,color:white,stroke-width:2px
+    style Patient fill:#10B981,stroke:#059669,color:white,stroke-width:2px
+    style PatientNote fill:#34D399,stroke:#059669,color:white,stroke-width:2px
+    style Doctor fill:#3B82F6,stroke:#2563EB,color:white,stroke-width:2px
+    style ICURoom fill:#F59E0B,stroke:#D97706,color:white,stroke-width:2px
+    style ICUAdmission fill:#FBBF24,stroke:#D97706,color:white,stroke-width:2px
+    style MedicalRecord fill:#EC4899,stroke:#DB2777,color:white,stroke-width:2px
+    style VitalSigns fill:#F472B6,stroke:#DB2777,color:white,stroke-width:2px
+    style Appointment fill:#06B6D4,stroke:#0891B2,color:white,stroke-width:2px
+    
+    %% Style subgraphs
+    style Auth fill:#4F46E5,stroke:#4338CA,color:white,opacity:0.1
+    style PatientMgmt fill:#059669,stroke:#047857,color:white,opacity:0.1
+    style StaffMgmt fill:#2563EB,stroke:#1D4ED8,color:white,opacity:0.1 
+    style ICUMgmt fill:#D97706,stroke:#B45309,color:white,opacity:0.1
+    style MedRecords fill:#DB2777,stroke:#BE185D,color:white,opacity:0.1
+    style Appts fill:#0891B2,stroke:#0E7490,color:white,opacity:0.1
 ```
 
 </div>
