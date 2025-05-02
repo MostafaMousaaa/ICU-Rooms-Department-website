@@ -88,41 +88,49 @@ def login():
 @app.route('/complete-patient-profile/<int:user_id>', methods=['GET', 'POST'])
 def complete_patient_profile(user_id):
     if request.method == 'POST':
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        date_of_birth = request.form['date_of_birth']
-        gender = request.form['gender']
-        blood_group = request.form['blood_group']
-        phone = request.form['phone']
-        address = request.form['address']
-        
-        # Handle photo upload
-        photo = None
-        if 'photo' in request.files and request.files['photo'].filename != '':
-            photo_file = request.files['photo']
-            filename = secure_filename(f"patient_{user_id}_{photo_file.filename}")
-            photo_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            photo = filename
-        
-        new_patient = Patient(
-            user_id=user_id,
-            first_name=first_name,
-            last_name=last_name,
-            date_of_birth=date_of_birth,
-            gender=gender,
-            blood_group=blood_group,
-            phone=phone,
-            address=address,
-            photo=photo
-        )
-        
         try:
+            # Get form data
+            first_name = request.form['first_name']
+            last_name = request.form['last_name']
+            date_of_birth_str = request.form['date_of_birth']
+            gender = request.form['gender']
+            blood_group = request.form.get('blood_group', '')
+            phone = request.form['phone']
+            address = request.form.get('address', '')
+            
+            # Convert date string to Python date object
+            date_of_birth = datetime.strptime(date_of_birth_str, '%Y-%m-%d').date()
+            
+            # Handle photo upload
+            photo = None
+            if 'photo' in request.files and request.files['photo'].filename != '':
+                photo_file = request.files['photo']
+                filename = secure_filename(f"patient_{user_id}_{photo_file.filename}")
+                photo_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                photo = filename
+            
+            # Create new patient with proper date object
+            new_patient = Patient(
+                user_id=user_id,
+                first_name=first_name,
+                last_name=last_name,
+                date_of_birth=date_of_birth,  # Now using a Python date object
+                gender=gender,
+                blood_group=blood_group,
+                phone=phone,
+                address=address,
+                photo=photo
+            )
+            
             db.session.add(new_patient)
             db.session.commit()
             flash('Profile completed successfully!')
             return redirect(url_for('patient_profile', patient_id=new_patient.id))
-        except:
-            flash('There was an issue completing your profile')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'There was an issue completing your profile: {str(e)}')
+            print(f"Error creating patient: {str(e)}")
+            return redirect(url_for('complete_patient_profile', user_id=user_id))
             
     return render_template('profiles/complete_patient_profile.html')
 
@@ -130,39 +138,44 @@ def complete_patient_profile(user_id):
 @app.route('/complete-doctor-profile/<int:user_id>', methods=['GET', 'POST'])
 def complete_doctor_profile(user_id):
     if request.method == 'POST':
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        specialization = request.form['specialization']
-        qualification = request.form['qualification']
-        experience = request.form['experience']
-        phone = request.form['phone']
-        
-        # Handle photo upload
-        photo = None
-        if 'photo' in request.files and request.files['photo'].filename != '':
-            photo_file = request.files['photo']
-            filename = secure_filename(f"doctor_{user_id}_{photo_file.filename}")
-            photo_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            photo = filename
-        
-        new_doctor = Doctor(
-            user_id=user_id,
-            first_name=first_name,
-            last_name=last_name,
-            specialization=specialization,
-            qualification=qualification,
-            experience=experience,
-            phone=phone,
-            photo=photo
-        )
-        
         try:
+            # Get form data
+            first_name = request.form['first_name']
+            last_name = request.form['last_name']
+            specialization = request.form['specialization']
+            qualification = request.form.get('qualification', '')
+            experience = request.form.get('experience', '')
+            phone = request.form['phone']  # Get the phone value from form
+            
+            # Handle photo upload
+            photo = None
+            if 'photo' in request.files and request.files['photo'].filename != '':
+                photo_file = request.files['photo']
+                filename = secure_filename(f"doctor_{user_id}_{photo_file.filename}")
+                photo_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                photo = filename
+            
+            # Use 'phone' instead of 'primary_phone'
+            new_doctor = Doctor(
+                user_id=user_id,
+                first_name=first_name,
+                last_name=last_name,
+                specialization=specialization,
+                qualification=qualification,
+                experience=experience,
+                phone=phone,  # Use phone instead of primary_phone
+                photo=photo
+            )
+            
             db.session.add(new_doctor)
             db.session.commit()
             flash('Profile completed successfully!')
             return redirect(url_for('doctor_profile', doctor_id=new_doctor.id))
-        except:
-            flash('There was an issue completing your profile')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'There was an issue completing your profile: {str(e)}')
+            print(f"Error completing doctor profile: {str(e)}")
+            return redirect(url_for('complete_doctor_profile', user_id=user_id))
             
     return render_template('profiles/complete_doctor_profile.html')
 

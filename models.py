@@ -20,7 +20,7 @@ class Patient(db.Model):
     date_of_birth = db.Column(db.Date, nullable=False)
     gender = db.Column(db.String(20), nullable=False)
     blood_group = db.Column(db.String(10))
-    phone = db.Column(db.String(20))
+    phone = db.Column(db.String(20))  # This field might still be named "phone" not "primary_phone"
     address = db.Column(db.String(200))
     photo = db.Column(db.String(200))  # File path to photo
     
