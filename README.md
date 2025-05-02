@@ -662,29 +662,38 @@ erDiagram
 graph TD
     subgraph Authentication
         User(["👤 User"])
+        style User fill:#6366F1,stroke:#4F46E5,color:white
     end
     
     subgraph "Patient Management"
         Patient(["🧑‍⚕️ Patient"])
         PatientNote(["📝 PatientNote"])
+        style Patient fill:#10B981,stroke:#059669,color:white
+        style PatientNote fill:#34D399,stroke:#059669,color:white
     end
     
     subgraph "Staff Management"
         Doctor(["👨‍⚕️ Doctor"])
+        style Doctor fill:#3B82F6,stroke:#2563EB,color:white
     end
     
     subgraph "ICU Management"
         ICURoom(["🚪 ICU Room"])
         ICUAdmission(["🛏️ ICU Admission"])
+        style ICURoom fill:#F59E0B,stroke:#D97706,color:white
+        style ICUAdmission fill:#FBBF24,stroke:#D97706,color:white
     end
     
     subgraph "Medical Records"
         MedicalRecord(["📋 Medical Record"])
         VitalSigns(["📊 Vital Signs"])
+        style MedicalRecord fill:#EC4899,stroke:#DB2777,color:white
+        style VitalSigns fill:#F472B6,stroke:#DB2777,color:white
     end
     
     subgraph "Appointments"
         Appointment(["📅 Appointment"])
+        style Appointment fill:#06B6D4,stroke:#0891B2,color:white
     end
     
     User -->|1:0-1| Patient
@@ -704,15 +713,73 @@ graph TD
     ICURoom -->|1:N| ICUAdmission
     ICUAdmission -->|1:N| VitalSigns
 
-    style User fill:#ffcccc,stroke:#ff6666
-    style Patient fill:#ccffcc,stroke:#66ff66
-    style Doctor fill:#ccccff,stroke:#6666ff
-    style ICURoom fill:#ffffcc,stroke:#ffff66
-    style ICUAdmission fill:#ffffcc,stroke:#ffff66
-    style MedicalRecord fill:#ffccff,stroke:#ff66ff
-    style VitalSigns fill:#ffccff,stroke:#ff66ff
-    style Appointment fill:#ccffff,stroke:#66ffff
-    style PatientNote fill:#ccffcc,stroke:#66ff66
+    %% Set colors for subgraphs
+    classDef authBG fill:#4F46E5,stroke:#4338CA,color:white
+    classDef patientBG fill:#059669,stroke:#047857,color:white
+    classDef staffBG fill:#2563EB,stroke:#1D4ED8,color:white
+    classDef icuBG fill:#D97706,stroke:#B45309,color:white
+    classDef recordsBG fill:#DB2777,stroke:#BE185D,color:white
+    classDef apptBG fill:#0891B2,stroke:#0E7490,color:white
+
+    %% Apply colors to subgraphs
+    class Authentication authBG
+    class "Patient Management" patientBG
+    class "Staff Management" staffBG
+    class "ICU Management" icuBG
+    class "Medical Records" recordsBG
+    class "Appointments" apptBG
+```
+
+</div>
+
+## Alternative Visualization
+
+<div align="center">
+
+```mermaid
+flowchart TD
+    %% Define elegant color scheme
+    classDef user fill:#7C3AED,stroke:#6D28D9,color:white,stroke-width:2px
+    classDef patient fill:#059669,stroke:#047857,color:white,stroke-width:2px
+    classDef doctor fill:#2563EB,stroke:#1D4ED8,color:white,stroke-width:2px
+    classDef room fill:#F59E0B,stroke:#D97706,color:white,stroke-width:2px
+    classDef admission fill:#FBBF24,stroke:#D97706,color:white,stroke-width:2px
+    classDef record fill:#EC4899,stroke:#DB2777,color:white,stroke-width:2px
+    classDef vital fill:#F472B6,stroke:#DB2777,color:white,stroke-width:2px
+    classDef appt fill:#06B6D4,stroke:#0891B2,color:white,stroke-width:2px
+    classDef note fill:#34D399,stroke:#059669,color:white,stroke-width:2px
+    
+    %% Entities with icons
+    User("👤 User"):::user
+    Patient("🧑‍⚕️ Patient"):::patient
+    Doctor("👨‍⚕️ Doctor"):::doctor
+    ICURoom("🚪 ICU Room"):::room
+    ICUAdmission("🛏️ ICU Admission"):::admission
+    MedicalRecord("📋 Medical Record"):::record
+    VitalSigns("📊 Vital Signs"):::vital
+    Appointment("📅 Appointment"):::appt
+    PatientNote("📝 Patient Note"):::note
+    
+    %% Relationships with elegant styling
+    User -.->|"1:0-1"| Patient
+    User -.->|"1:0-1"| Doctor
+    User -.->|"1:N"| PatientNote
+    
+    Patient -.->|"1:N"| ICUAdmission
+    Patient -.->|"1:N"| MedicalRecord
+    Patient -.->|"1:N"| Appointment
+    Patient -.->|"1:N"| VitalSigns
+    Patient -.->|"1:N"| PatientNote
+    
+    Doctor -.->|"1:N"| ICUAdmission
+    Doctor -.->|"1:N"| MedicalRecord
+    Doctor -.->|"1:N"| Appointment
+    
+    ICURoom -.->|"1:N"| ICUAdmission
+    ICUAdmission -.->|"1:N"| VitalSigns
+    
+    %% Add box shadows and rounded corners to all nodes
+    linkStyle default stroke:#333,stroke-width:1.5px
 ```
 
 </div>
