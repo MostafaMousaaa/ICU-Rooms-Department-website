@@ -789,4 +789,4 @@ python run.py
 
 ## Copyright
 
-Reserved to SMBE27 2025
+Reserved to SMBE26 2025
